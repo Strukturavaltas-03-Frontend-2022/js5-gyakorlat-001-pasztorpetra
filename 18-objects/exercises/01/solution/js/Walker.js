@@ -10,10 +10,9 @@
 //     - `walk()`: speedInMph = 10
 //     - `eat()`:  foodName = "meat"
 //     - `speak()`: sound = "grrrrrr"
-// - Legyen egy `firstName`, és egy `lastName` getter/setter. A `firstName` a név első felét 
-// adja vissza/módosítja, míg a `lastName` a név második felét adja vissza/módosítja. 
-// Ezeket a `defineProperties` metódus segítségével add hozzá a objektumhoz a kontruktor függvényen belül.  
-
+// - Legyen egy `firstName`, és egy `lastName` getter/setter. A `firstName` a név első felét
+// adja vissza/módosítja, míg a `lastName` a név második felét adja vissza/módosítja.
+// Ezeket a `defineProperties` metódus segítségével add hozzá a objektumhoz a kontruktor függvényen belül.
 
 // const Walker = {
 //   name: 'John Doe',
@@ -29,29 +28,28 @@
 //   }
 // }
 
-
-'use strict'
-function Walker(name = "John Doe", state = "dead") {
+function Walker(name = 'John Doe', state = 'dead') {
   this.name = name;
   this.state = state;
 
-  Object.defineProperty (this, 'firstName', {
-    get () {
-      return this.name.split(' ')[0];
+  Object.defineProperties(this, {
+    firstName: {
+      get() {
+        return this.name.split(' ')[0];
+      },
+      set(value) {
+        this.name = `${value} ${this.name.split(' ')[1]}`;
+      },
     },
-    set(value) {
-      this.name = `${value} ${this.name.split(' ')[1]}`;
+    lastName: {
+      get() {
+        return this.name.split(' ')[1];
+      },
+      set(value) {
+        this.name = `${this.name.split(' ')[0]} ${value}`;
+      },
     },
   });
-
-  Object.defineProperty (this, 'lastName', {
-    get () {
-      return this.name.split(' ')[1];
-    },
-    set(value) {
-      this.name = `${this.name.split(' ')[0]} ${value}`;
-    },
-  }); 
 }
 
 Walker.prototype = {
@@ -59,18 +57,34 @@ Walker.prototype = {
     return `${this.name} the ${this.state} walks with ${speedInMph} mph!`;
   },
 
-  eat(foodName = "meat") {
+  eat(foodName = 'meat') {
     return `${this.name} the ${this.state} eats ${foodName}!`;
   },
 
-  speak(sound = "grrrrrr") {
+  speak(sound = 'grrrrrr') {
     return `${this.name} the ${this.state} says ${sound}!`;
   },
 };
 
-
 export default Walker;
 
+// Object.defineProperty (this, 'firstName', {
+//   get () {
+//     return this.name.split(' ')[0];
+//   },
+//   set(value) {
+//     this.name = `${value} ${this.name.split(' ')[1]}`;
+//   },
+// });
+
+// Object.defineProperty (this, 'lastName', {
+//   get () {
+//     return this.name.split(' ')[1];
+//   },
+//   set(value) {
+//     this.name = `${this.name.split(' ')[0]} ${value}`;
+//   },
+// });
 
 // Walker.prototype.walk = function(speedInMph = 10) {
 //   return `${this.name} the ${this.state} walks with ${speedInMph} mph!`;
